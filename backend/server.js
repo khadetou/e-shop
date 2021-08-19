@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import colors from "colors";
 import morgan from "morgan";
 import productRoutes from "./routes/productRoutes.js";
+import { notFound, errorHandler } from "./middlewares/errorMiddleware.js";
 import connectDB from "./config/db.js";
 
 dotenv.config();
@@ -19,6 +20,10 @@ if (NODE_ENV === "development") {
 }
 
 app.use("/api/products", productRoutes);
+
+//Middlewares
+app.use(notFound);
+app.use(errorHandler);
 
 //SETTING THE PORT
 const PORTV = PORT || 5000;
