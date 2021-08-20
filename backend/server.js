@@ -2,9 +2,13 @@ import express from "express";
 import dotenv from "dotenv";
 import fs from "fs";
 import colors from "colors";
+import cors from "cors";
 import { notFound, errorHandler } from "./middlewares/errorMiddleware.js";
 import connectDB from "./config/db.js";
 const morgan = require("morgan");
+
+app.use(cors());
+app.options("*", cors());
 
 dotenv.config();
 const app = express();
