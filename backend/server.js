@@ -7,12 +7,12 @@ import { notFound, errorHandler } from "./middlewares/errorMiddleware.js";
 import connectDB from "./config/db.js";
 const morgan = require("morgan");
 
-app.use(cors());
-app.options("*", cors());
-
 dotenv.config();
 const app = express();
 const { PORT, NODE_ENV } = process.env;
+
+app.use(cors());
+app.options("*", cors());
 
 connectDB();
 
