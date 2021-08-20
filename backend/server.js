@@ -21,7 +21,7 @@ if (NODE_ENV === "development") {
 
 // Autoload all the routes files
 fs.readdirSync("./backend/routes").map((route) =>
-  app.use("/", require(`./routes/${route}`))
+  app.use("/api", require(`./routes/${route}`))
 );
 
 //Middlewares
