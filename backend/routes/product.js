@@ -13,4 +13,4 @@ router
   )
   .post("/", createProducts);
 
-export default router;
+module.exports = router;

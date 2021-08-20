@@ -1,10 +1,10 @@
 import express from "express";
 import dotenv from "dotenv";
+import fs from "fs";
 import colors from "colors";
-import morgan from "morgan";
-import productRoutes from "./routes/productRoutes.js";
 import { notFound, errorHandler } from "./middlewares/errorMiddleware.js";
 import connectDB from "./config/db.js";
+const morgan = require("morgan");
 
 dotenv.config();
 const app = express();
@@ -19,7 +19,10 @@ if (NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
-app.use("/api/products", productRoutes);
+// Autoload all the routes files
+fs.readdirSync("./backend/routes").map((route) =>
+  app.use("/", require(`./routes/${route}`))
+);
 
 //Middlewares
 app.use(notFound);
