@@ -7,43 +7,46 @@ import asyncHandler from "express-async-handler";
 
 export const createProducts = asyncHandler(async (req, res) => {
   //CRATE AND UPDATE SECTION
-  const categori = Category.findById(req.body.id);
-  if (!categori) res.status(400).json({ msg: "Invalid Category" });
-  const {
-    name,
-    image,
-    brand,
-    description,
-    richDescription,
-    category,
-    reviews,
-    rating,
-    numReviews,
-    price,
-    countInStock,
-    isFeatured,
-  } = req.body;
+  const categori = await Category.findById(req.body.category);
+  if (!categori) {
+    res.status(400).send({ msg: "Invalid Category" });
+  } else {
+    const {
+      name,
+      image,
+      brand,
+      description,
+      richDescription,
+      category,
+      reviews,
+      rating,
+      numReviews,
+      price,
+      countInStock,
+      isFeatured,
+    } = req.body;
 
-  const productField = {};
+    const productField = {};
 
-  if (name) productField.name = name;
-  if (image) productField.image = image;
-  if (brand) productField.brand = brand;
-  if (description) productField.description = description;
-  if (richDescription) productField.richDescription = richDescription;
-  if (category) productField.category = category;
-  if (rating) productField.rating = rating;
-  if (numReviews) productField.numReviews = numReviews;
-  if (price) productField.price = price;
-  if (countInStock) productField.countInStock = countInStock;
-  if (isFeatured) productField.isFeatured = isFeatured;
+    if (name) productField.name = name;
+    if (image) productField.image = image;
+    if (brand) productField.brand = brand;
+    if (description) productField.description = description;
+    if (richDescription) productField.richDescription = richDescription;
+    if (category) productField.category = category;
+    if (rating) productField.rating = rating;
+    if (numReviews) productField.numReviews = numReviews;
+    if (price) productField.price = price;
+    if (countInStock) productField.countInStock = countInStock;
+    if (isFeatured) productField.isFeatured = isFeatured;
 
-  let product = await Product.findOne();
+    let product = await Product.findOne();
 
-  //CREATE
-  product = new Product(productField);
-  await product.save();
-  res.json(product);
+    //CREATE
+    product = new Product(productField);
+    await product.save();
+    res.json(product);
+  }
 });
 
 //@Desc Get All products
