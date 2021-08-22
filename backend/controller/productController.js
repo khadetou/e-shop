@@ -18,7 +18,7 @@ export const createProducts = asyncHandler(async (req, res) => {
     countInStock,
   } = req.body;
 
-  console.log(req.category);
+  console.log(req);
   const productField = {};
   productField.user = req.category.id;
 

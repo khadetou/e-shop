@@ -65,3 +65,26 @@ export const deleteCategory = asyncHandler(async (req, res) => {
     throw new Error("Category not found");
   }
 });
+
+//@desc   update Category
+//@route put/api/category/:id
+//@access private, admin
+
+export const updateCategory = asyncHandler(async (req, res) => {
+  //UPDATE
+  const { name, icon, color, image } = req.body;
+  let category = await Category.findById(req.params.id);
+
+  if (category) {
+    (category.name = name || category.name),
+      (category.image = image || category.image),
+      (category.icon = icon || category.icon),
+      (category.color = color || category.color);
+  } else {
+    res.status(404);
+    throw new Error("category not found");
+  }
+
+  const updatedcategory = await category.save();
+  res.json(updatedcategory);
+});
