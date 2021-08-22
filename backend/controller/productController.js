@@ -6,15 +6,32 @@ import asyncHandler from "express-async-handler";
 
 export const createProducts = asyncHandler(async (req, res) => {
   //CRATE AND UPDATE SECTION
-  const { name, image, countInStock } = req.body;
+  const {
+    name,
+    image,
+    brand,
+    description,
+    reviews,
+    rating,
+    numReviews,
+    price,
+    countInStock,
+  } = req.body;
 
+  console.log(req.category);
   const productField = {};
+  productField.user = req.category.id;
 
   if (name) productField.name = name;
   if (image) productField.image = image;
+  if (brand) productField.brand = brand;
+  if (description) productField.description = description;
+  if (rating) productField.rating = rating;
+  if (numReviews) productField.numReviews = numReviews;
+  if (price) productField.price = price;
   if (countInStock) productField.countInStock = countInStock;
 
-  let product = await Product.findOne();
+  let product = await Product.findOne({ category: req.category.id });
 
   //CREATE
   product = new Product(productField);
